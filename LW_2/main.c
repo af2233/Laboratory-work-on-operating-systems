@@ -12,7 +12,7 @@ pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 int active_threads = 0;
 
 typedef struct {
-    double **matrix;
+    double** matrix;
     int size;
     int column;
     double result;
@@ -108,7 +108,6 @@ double determinant(double** matrix, int size) {
         pthread_mutex_unlock(&mutex);
 
         pthread_create(&threads[col], NULL, thread_func, &args[col]);
-        
     }
 
     for (int col = 0; col < size; col++) {
@@ -156,7 +155,7 @@ int main(int argc, char** argv) {
 
     char msg[1024];
     uint32_t len = snprintf(msg, sizeof(msg) - 1, "Determinant: %.2lf\n", determinant_value);
-    write(STDERR_FILENO, msg, len);
+    write(STDOUT_FILENO, msg, len);
 
     pthread_mutex_destroy(&mutex);
     pthread_cond_destroy(&cond);
